@@ -1,12 +1,12 @@
 ''' Form
-''' Version 0.4a
+''' Version 0.5b
 ''' Copyright © 2016 Nonki Takahashi.  The MIT License.
 ''' Last update 2016-04-27
 ''' Challenge 2016-01/02
 ''' Repository https://github.com/nonkit/Form.git
-''' Program ID KMT677-3
+''' Program ID KMT677-4
 '
-formName = "Form.sb"
+formName = "Form.frm.sb"
 grid = "False"
 DrawForm()
 ' show form array
@@ -17,7 +17,7 @@ EndFor
 Controls.SetTextBoxText(frm["obj"], buf)
 While "True"
   If buttonClicked Then
-    frm = form[5]
+    frm = form[id["filename"]]
     formName = Controls.GetTextBoxText(frm["obj"])
     GraphicsWindow.Clear()
     DrawForm()
@@ -58,10 +58,14 @@ Sub Form_ShowForm
   ''' param nForm - number of objects in the form
   ''' return gw - width of the graphics window
   ''' return gh - height of the graphics window
+  ''' return id - array of ids in the form
   For i = 1 To nForm
     frm = form[i]
+    If frm["id"] <> "" Then
+      id[frm["id"]] = i
+    EndIf
     If frm["func"] = "form" Then
-      ' func=form;bg=LightGray;gx=10;gy=10;gw=598;gh=428;title=Form 0.4a;
+      ' func=form;bg=LightGray;gx=10;gy=10;gw=598;gh=428;title=Form 0.5b;
       If frm["bg"] <> "" Then
         GraphicsWindow.BackgroundColor = frm["bg"]
       EndIf
@@ -93,8 +97,8 @@ Sub Form_ShowForm
       frm["obj"] = Shapes.AddText(frm["text"])
       Shapes.Move(frm["obj"], frm["x"], frm["y"])
     ElseIf frm["func"] = "tbox" Then
-      ' func=tbox;x=70;y=12;width=460;height=22;bc=Black;fn=Segoe UI;fs=12;fb=True;fi=False;text=.;
-      ' func=tbox;x=70;y=42;width=140;height=22;bc=Black;fn=Segoe UI;fs=12;fb=True;fi=False;text=Form.sb;
+      ' func=tbox;id=folder;x=70;y=12;width=460;height=22;bc=Black;fn=Segoe UI;fs=12;fb=True;fi=False;text=.;
+      ' func=tbox;id=filename;x=70;y=42;width=140;height=22;bc=Black;fn=Segoe UI;fs=12;fb=True;fi=False;text=Form.sb;
       GraphicsWindow.FontName = frm["fn"]
       GraphicsWindow.FontSize = frm["fs"]
       GraphicsWindow.FontBold = frm["fb"]
@@ -131,7 +135,7 @@ Sub Form_ShowForm
       Shapes.Move(frm["obj"], frm["x"] + (frm["width"] - ix) / 2, frm["y"] + (frm["height"] - iy) / 2)
       Shapes.Zoom(frm["obj"], scaleX, scaleY)
     ElseIf frm["func"] = "mtbox" Then
-      ' func=mtbox;x=10;y=72;width=578;height=346;bc=Black;fn=Segoe UI;fs=12;fb=True;fi=False;
+      ' func=mtbox;id=data;x=10;y=72;width=578;height=346;bc=Black;fn=Segoe UI;fs=12;fb=True;fi=False;
       GraphicsWindow.FontName = frm["fn"]
       GraphicsWindow.FontSize = frm["fs"]
       GraphicsWindow.FontBold = frm["fb"]
@@ -139,6 +143,8 @@ Sub Form_ShowForm
       GraphicsWindow.BrushColor = frm["bc"]
       frm["obj"] = Controls.AddMultiLineTextBox(frm["x"], frm["y"])
       Controls.SetSize(frm["obj"], frm["width"], frm["height"])
+    Else
+      id[frm["id"]] = ""
     EndIf
     form[i] = frm
   EndFor
