@@ -1,9 +1,0 @@
-' func=form;bg=LightGray;gx=10;gy=10;gw=598;gh=428;title=Form 0.3a;
-' func=text;text=Folder;x=10;y=15;bc=Black;fn=Segoe UI;fs=12;fb=True;fi=False;
-' func=text;text=Filename;x=10;y=45;bc=Black;fn=Segoe UI;fs=12;fb=True;fi=False;
-' func=tbox;x=70;y=12;width=460;height=22;bc=Black;fn=Segoe UI;fs=12;fb=True;fi=False;text=.;
-' func=tbox;x=70;y=42;width=140;height=22;bc=Black;fn=Segoe UI;fs=12;fb=True;fi=False;text=Form1.sb;
-' func=btn;caption=OK;x=220;y=40;width=28;height=26;bc=Black;fn=Segoe UI;fs=12;fb=True;fi=False;
-' func=rect;x=546;y=10;width=2;height=32;scale=2;pw=0;pc=Black;bc=#999999;
-' func=img;src=img/Form32.png;x=556;y=10;width=32;height=32;
-' func=mtbox;x=10;y=72;width=578;height=346;bc=Black;fn=Segoe UI;fs=12;fb=True;fi=False;

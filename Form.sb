@@ -1,16 +1,13 @@
 ''' Form
-''' Version 0.3a
+''' Version 0.4a
 ''' Copyright © 2016 Nonki Takahashi.  The MIT License.
-''' Last update 2016-04-25
+''' Last update 2016-04-27
 ''' Challenge 2016-01/02
 ''' Repository https://github.com/nonkit/Form.git
-''' Program ID KMT677-1
+''' Program ID KMT677-2
 '
-title = "Form 0.3a"
-CR = Text.GetCharacter(13)
-LF = Text.GetCharacter(10)
-filename = "Form1.sb"
-grid = "True"
+formName = "Form.sb"
+grid = "False"
 DrawForm()
 ' show form array
 buf = ""
@@ -21,8 +18,7 @@ Controls.SetTextBoxText(frm["obj"], buf)
 While "True"
   If buttonClicked Then
     frm = form[5]
-    filename = Controls.GetTextBoxText(frm["obj"])
-    GraphicsWindow.Title = filename
+    formName = Controls.GetTextBoxText(frm["obj"])
     GraphicsWindow.Clear()
     DrawForm()
     buttonClicked = "False"
@@ -65,7 +61,7 @@ Sub Form_ShowForm
   For i = 1 To nForm
     frm = form[i]
     If frm["func"] = "form" Then
-      ' func=form;bg=LightGray;gx=10;gy=10;gw=598;gh=428;title=Form 0.3a;
+      ' func=form;bg=LightGray;gx=10;gy=10;gw=598;gh=428;title=Form 0.4a;
       If frm["bg"] <> "" Then
         GraphicsWindow.BackgroundColor = frm["bg"]
       EndIf
@@ -125,7 +121,7 @@ Sub Form_ShowForm
       frm["obj"] = Shapes.AddRectangle(frm["width"], frm["height"])
       Shapes.Move(frm["obj"], frm["x"], frm["y"])
     ElseIf frm["func"] = "img" Then
-      ' func=img;src=img/Form.png;x=556;y=10;width=32;height=32;
+      ' func=img;src=img/Form32.png;x=556;y=10;width=32;height=32;
       img = ImageList.LoadImage(Program.Directory + "/" + frm["src"])
       ix = ImageList.GetWidthOfImage(img)
       iy = ImageList.GetHeightOfImage(img)
@@ -152,16 +148,15 @@ Sub OnButtonClicked
 EndSub
 Sub Form_GetForm
   ''' Form | Get form from file
-  ''' param filename - file name
+  ''' param formName - form file name
   ''' return form - array for the form
   folder = Program.Directory
-  buf = File.ReadContents(folder + "/" + filename)
-  len = Text.GetLength(buf)
-  p = 1
+  buf = File.ReadContents(folder + "/" + formName)
+  Buf_Init()
   nForm = 0
   While p <= len
-    GetLine()
-    RemoveLeadingSpace()
+    Buf_GetLine()
+    Line_RemoveLeadingSpace()
     If Text.StartsWith(line, "'") Then
       func = Text.GetIndexOf(line, "func=")
       If 0 < func Then
@@ -171,8 +166,8 @@ Sub Form_GetForm
     EndIf
   EndWhile
 EndSub
-Sub RemoveLeadingSpace
-  ''' Remove leading space
+Sub Line_RemoveLeadingSpace
+  ''' Line | Remove leading space
   ''' param line - to remove leading space
   ''' return line - the result
   Stack.PushValue("local", p)
@@ -183,8 +178,8 @@ Sub RemoveLeadingSpace
   line = Text.GetSubTextToEnd(line, p)
   p = Stack.PopValue("local")
 EndSub
-Sub GetLine
-  ''' Get line from buf
+Sub Buf_GetLine
+  ''' Buffer | Get line from buf
   ''' param p - pointer to buf
   ''' param buf - buffer
   ''' param len - length of the buffer
@@ -203,4 +198,15 @@ Sub GetLine
       p = p + 1
     EndIf
   EndIf
+EndSub
+Sub Buf_Init
+  ''' param buf - buffer
+  ''' return CR - carriage return
+  ''' return LF - line feed
+  ''' return len - length of text in buf
+  ''' return p - pointer to buf
+  CR = Text.GetCharacter(13)
+  LF = Text.GetCharacter(10)
+  len = Text.GetLength(buf)
+  p = 1
 EndSub
