@@ -1,11 +1,12 @@
-''' Form
-''' Version 0.5b
-''' Copyright © 2016 Nonki Takahashi.  The MIT License.
-''' Last update 2016-04-27
-''' Challenge 2016-01/02
-''' Repository https://github.com/nonkit/Form.git
-''' Program ID KMT677-4
-'
+'--
+' Form
+' Version 0.51b
+' Copyright © 2017 Nonki Takahashi.  The MIT License.
+' Last update 2017-04-30
+' Challenge 2016-01/02
+' Repository https://github.com/nonkit/Form.git
+' Program ID KMT677-5
+
 formName = "Form.frm.sb"
 grid = "False"
 DrawForm()
@@ -26,8 +27,10 @@ While "True"
     Program.Delay(200)
   EndIf
 EndWhile
+
 Sub DrawForm
-  ''' Draw form
+  '--
+  ' Draw form
   Form_GetForm()
   Form_ShowForm()
   If grid Then
@@ -39,10 +42,12 @@ Sub DrawForm
     DrawGrids()
   EndIf
 EndSub
+
 Sub DrawGrids
-  ''' Draw grids
-  ''' param gap
-  ''' param color
+  '--
+  ' Draw grids
+  ' param gap
+  ' param color
   GraphicsWindow.PenWidth = 1
   GraphicsWindow.PenColor = color
   For y = gap To gh Step gap
@@ -52,13 +57,15 @@ Sub DrawGrids
     GraphicsWindow.DrawLine(x, 0, x, gh)
   EndFor
 EndSub
+
 Sub Form_ShowForm
-  ''' Form | Show form
-  ''' param form - array of the form
-  ''' param nForm - number of objects in the form
-  ''' return gw - width of the graphics window
-  ''' return gh - height of the graphics window
-  ''' return id - array of ids in the form
+  '--
+  ' Form | Show form
+  ' param form - array of the form
+  ' param nForm - number of objects in the form
+  ' return gw - width of the graphics window
+  ' return gh - height of the graphics window
+  ' return id - array of ids in the form
   For i = 1 To nForm
     frm = form[i]
     If frm["id"] <> "" Then
@@ -149,13 +156,18 @@ Sub Form_ShowForm
     form[i] = frm
   EndFor
 EndSub
+
 Sub OnButtonClicked
+  '--
+  ' Button control handler when clicked
   buttonClicked = "True"
 EndSub
+
 Sub Form_GetForm
-  ''' Form | Get form from file
-  ''' param formName - form file name
-  ''' return form - array for the form
+  '--
+  ' Form | Get form from file
+  ' param formName - form file name
+  ' return form - array for the form
   folder = Program.Directory
   buf = File.ReadContents(folder + "/" + formName)
   Buf_Init()
@@ -172,10 +184,12 @@ Sub Form_GetForm
     EndIf
   EndWhile
 EndSub
+
 Sub Line_RemoveLeadingSpace
-  ''' Line | Remove leading space
-  ''' param line - to remove leading space
-  ''' return line - the result
+  '--
+  ' Line | Remove leading space
+  ' param line - to remove leading space
+  ' return line - the result
   Stack.PushValue("local", p)
   p = 1
   While Text.GetSubText(line, p, 1) = " "
@@ -184,13 +198,15 @@ Sub Line_RemoveLeadingSpace
   line = Text.GetSubTextToEnd(line, p)
   p = Stack.PopValue("local")
 EndSub
+
 Sub Buf_GetLine
-  ''' Buffer | Get line from buf
-  ''' param p - pointer to buf
-  ''' param buf - buffer
-  ''' param len - length of the buffer
-  ''' return line - current line
-  ''' return p - updated pointer to next line in buf
+  '--
+  ' Buffer | Get line from buf
+  ' param p - pointer to buf
+  ' param buf - buffer
+  ' param len - length of the buffer
+  ' return line - current line
+  ' return p - updated pointer to next line in buf
   If p <= len Then
     nl = Text.GetIndexOf(Text.GetSubTextToEnd(buf, p), CR)
     If 0 < nl Then
@@ -205,12 +221,14 @@ Sub Buf_GetLine
     EndIf
   EndIf
 EndSub
+
 Sub Buf_Init
-  ''' param buf - buffer
-  ''' return CR - carriage return
-  ''' return LF - line feed
-  ''' return len - length of text in buf
-  ''' return p - pointer to buf
+  '--
+  ' param buf - buffer
+  ' return CR - carriage return
+  ' return LF - line feed
+  ' return len - length of text in buf
+  ' return p - pointer to buf
   CR = Text.GetCharacter(13)
   LF = Text.GetCharacter(10)
   len = Text.GetLength(buf)
